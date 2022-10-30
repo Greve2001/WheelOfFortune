@@ -41,15 +41,21 @@ fun Letter(letter: String){
 
 ////////// Top Bar //////////
 @Composable
-fun PointBar(points: Int){
+fun TopBar(points: Int, lives: Int){
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(40.dp)
-            .background(color = Color.Cyan)
+            .background(color = Color.Cyan),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
             text = "Points: $points",
+            modifier = Modifier.padding(5.dp),
+            fontSize = 20.sp
+        )
+        Text(
+            text = "Lives: $lives",
             modifier = Modifier.padding(5.dp),
             fontSize = 20.sp
         )

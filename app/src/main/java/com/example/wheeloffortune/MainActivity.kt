@@ -38,13 +38,14 @@ fun WheelOfFortune() {
     var letters = "Chic en".split("")
     letters = letters.subList(1, letters.lastIndex)
     var points = 1000
+    var lives = 5
     
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        PointBar(points = points)
+        TopBar(points = points, lives = lives)
         WordDisplay(letters = letters)
         Button(onClick = { /*TODO*/ }) {
             Text(text = "Spin the Wheel")
