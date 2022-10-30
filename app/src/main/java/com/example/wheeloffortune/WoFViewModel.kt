@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 
 class WoFViewModel : ViewModel() {
     fun getLettersToShow() : String {
-        var lettersGuessed : List<String> = uiState.value.lettersGuessed.split("")
-        var hiddenWord : List<String> = uiState.value.hiddenWord.split("")
-        lettersGuessed = lettersGuessed.subList(1, lettersGuessed.lastIndex)
-        hiddenWord = hiddenWord.subList(1, hiddenWord.lastIndex)
+        var lettersGuessed : String = uiState.value.lettersGuessed
+        var hiddenWord : String = uiState.value.hiddenWord
+
+        Log.println(Log.DEBUG, "TEST", "Letters Guessed: ${lettersGuessed}")
 
         var lettersToDisplay : String = ""
 

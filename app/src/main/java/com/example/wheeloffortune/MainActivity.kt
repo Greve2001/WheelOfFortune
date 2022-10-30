@@ -1,6 +1,7 @@
 package com.example.wheeloffortune
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +24,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 private val _uiState = MutableStateFlow(WoFUiState())
 val uiState: StateFlow<WoFUiState> = _uiState.asStateFlow()
+val viewModel = WoFViewModel()
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +44,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun WheelOfFortune() {
-    val viewModel = WoFViewModel()
-
+fun WheelOfFortune(lettersToDisplay: String) {
     var lettersToDisplay = viewModel.getLettersToShow()
 
+    Log.println(Log.DEBUG, "TEST", "Recompose!")
 
     Column(
         modifier = Modifier.fillMaxSize(),
