@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun WheelOfFortune(lettersToDisplay: String) {
+fun WheelOfFortune() {
     var lettersToDisplay = viewModel.getLettersToShow()
 
     Log.println(Log.DEBUG, "TEST", "Recompose!")
