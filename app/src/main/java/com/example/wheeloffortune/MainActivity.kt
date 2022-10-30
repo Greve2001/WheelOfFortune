@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,14 +35,20 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun WheelOfFortune() {
+    var letters = "Chic en".split("")
+    letters = letters.subList(1, letters.lastIndex)
+    var points = 1000
+    
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var letters = "Chic en".split("")
-        letters = letters.subList(1, letters.lastIndex)
+        PointBar(points = points)
         WordDisplay(letters = letters)
+        Button(onClick = { /*TODO*/ }) {
+            Text(text = "Spin the Wheel")
+        }
     }
     
 

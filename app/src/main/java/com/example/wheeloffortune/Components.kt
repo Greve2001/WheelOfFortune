@@ -8,7 +8,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
+
+////////// Hidden Word //////////
 @Composable
 fun WordDisplay(letters: List<String>){
     Row(
@@ -33,5 +36,22 @@ fun Letter(letter: String){
         contentAlignment = Alignment.Center
     ){
         Text(text = letter)
+    }
+}
+
+////////// Top Bar //////////
+@Composable
+fun PointBar(points: Int){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(40.dp)
+            .background(color = Color.Cyan)
+    ) {
+        Text(
+            text = "Points: $points",
+            modifier = Modifier.padding(5.dp),
+            fontSize = 20.sp
+        )
     }
 }
