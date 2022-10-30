@@ -15,12 +15,12 @@ import androidx.compose.ui.unit.sp
 
 ////////// Hidden Word //////////
 @Composable
-fun WordDisplay(letters: List<String>){
+fun WordDisplay(letters: String){
     Row(
 
     ) {
         letters.forEach {
-            Letter(letter = it)
+            Letter(letter = it.toString())
         }
     }
 }

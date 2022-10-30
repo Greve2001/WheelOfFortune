@@ -14,7 +14,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.wheeloffortune.ui.WoFUiState
 import com.example.wheeloffortune.ui.theme.WheelOfFortuneTheme
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
+
+private val _uiState = MutableStateFlow(WoFUiState())
+val uiState: StateFlow<WoFUiState> = _uiState.asStateFlow()
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,19 +43,19 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun WheelOfFortune() {
-    var letters = "Chic en".split("")
-    letters = letters.subList(1, letters.lastIndex)
-    var points = 1000
-    var lives = 5
-    
+    val viewModel = WoFViewModel()
+
+    var lettersToDisplay = viewModel.getLettersToShow()
+
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TopBar(points = points, lives = lives)
-        WordDisplay(letters = letters)
-        Button(onClick = { /* TODO */ }) {
+        TopBar(points = uiState.value.points, lives = uiState.value.lives)
+        WordDisplay(letters = lettersToDisplay)
+        Button(onClick = { viewModel.addGuessedLetter("C") }) {
             Text(text = "Spin the Wheel")
         }
     }

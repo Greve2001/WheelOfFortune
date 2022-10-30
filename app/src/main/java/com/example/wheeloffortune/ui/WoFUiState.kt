@@ -1,5 +1,9 @@
 package com.example.wheeloffortune.ui
 
 data class WoFUiState(
-    val hiddenWord: String = ""
+    var lives: Int = 5,
+    var points: Int = 0,
+
+    val hiddenWord: String = "Chicken",
+    var lettersGuessed: String = "",
 )
