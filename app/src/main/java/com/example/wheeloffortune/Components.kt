@@ -2,10 +2,12 @@ package com.example.wheeloffortune
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,6 +31,7 @@ fun Letter(letter: String){
         .height(50.dp)
         .width(40.dp)
         .padding(5.dp)
+        .clip(RoundedCornerShape(5.dp))
         .background(color = Color.LightGray)
 
     BoxWithConstraints(

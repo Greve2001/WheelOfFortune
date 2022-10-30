@@ -47,13 +47,10 @@ fun WheelOfFortune() {
     ) {
         TopBar(points = points, lives = lives)
         WordDisplay(letters = letters)
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { /* TODO */ }) {
             Text(text = "Spin the Wheel")
         }
     }
-    
-
-
 }
 
 @Preview(showBackground = true)
