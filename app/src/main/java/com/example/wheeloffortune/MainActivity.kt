@@ -9,8 +9,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.wheeloffortune.ui.WoFUiState
 import com.example.wheeloffortune.ui.theme.WheelOfFortuneTheme
@@ -40,10 +46,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun WheelOfFortune() {
     var lettersToDisplay = viewModel.getLettersToShow()
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
     Log.println(Log.DEBUG, "TEST", "Recompose!")
 
@@ -54,10 +63,26 @@ fun WheelOfFortune() {
     ) {
         TopBar(points = uiState.value.points, lives = uiState.value.lives)
         WordDisplay(letters = lettersToDisplay)
-        Button(onClick = { viewModel.addGuessedLetter("C") }) {
+        Button(
+            onClick = {
+                viewModel.addGuessedLetter("C")
+                focusRequester.requestFocus()
+            }
+        ) {
             Text(text = "Spin the Wheel")
         }
-        TextField(value = "", onValueChange = {})
+        TextField(
+            modifier = Modifier.focusRequester(focusRequester),
+            value = "",
+            onValueChange = {
+                keyboardController?.hide()
+                focusManager.clearFocus()
+                            },
+            colors = TextFieldDefaults.textFieldColors(
+                containerColor = Color.Transparent,
+                // unfocusedIndicatorColor = Color.Transparent
+            )
+        )
     }
 }
 
