@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -23,11 +24,6 @@ import com.example.wheeloffortune.ui.theme.WheelOfFortuneTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-
-
-private val _uiState = MutableStateFlow(WoFUiState())
-val uiState: StateFlow<WoFUiState> = _uiState.asStateFlow()
-val viewModel = WoFViewModel()
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +45,9 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun WheelOfFortune() {
+    val viewModel = remember { WoFViewModel() }
+    val uiState = viewModel.uiState.collectAsState()
+
     var lettersToDisplay = viewModel.getLettersToShow()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }

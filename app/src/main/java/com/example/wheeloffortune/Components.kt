@@ -2,6 +2,9 @@ package com.example.wheeloffortune
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,10 +19,15 @@ import androidx.compose.ui.unit.sp
 ////////// Hidden Word //////////
 @Composable
 fun WordDisplay(letters: String){
-    Row(
+    var gridWidth = letters.toList().count() * 40
+    if (gridWidth > 380) gridWidth = 380
 
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(40.dp),
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.width(gridWidth.dp)
     ) {
-        letters.forEach {
+        items(letters.toList()) {
             Letter(letter = it.toString())
         }
     }
