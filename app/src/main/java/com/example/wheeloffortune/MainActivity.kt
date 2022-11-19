@@ -3,9 +3,7 @@ package com.example.wheeloffortune
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -19,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.wheeloffortune.data.GameState
 import com.example.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
@@ -60,15 +59,17 @@ fun WheelOfFortune() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Absolute
         TopBar(points = uiState.value.points, lives = uiState.value.lives)
 
         WordDisplay(letters = lettersToDisplay.uppercase())
 
+        Spacer(modifier = Modifier.height(40.dp))
+        
         if (uiState.value.gameState == GameState.IDLE) {
             Button(
                 onClick = {
-                    viewModel.setGameState(GameState.INPUTTING)
-                    viewModel.updateLettersToShow()
+                    viewModel.spinTheWheel()
                 }
             ) {
                 Text(text = "Spin the Wheel")
@@ -76,6 +77,13 @@ fun WheelOfFortune() {
         }
 
         if (uiState.value.gameState == GameState.INPUTTING)  {
+            // Result String
+            val resultString = "You landed on ${uiState.value.pointsPerLetter} points!"
+            Text(text = resultString)
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            // Guessed Letters
             TextField(
                 modifier = Modifier.focusRequester(focusRequester),
                 value = uiState.value.lettersGuessed,
@@ -89,7 +97,15 @@ fun WheelOfFortune() {
                     // unfocusedIndicatorColor = Color.Transparent
                 )
             )
-            focusRequester.requestFocus()
+            focusRequester.requestFocus() // Focus on TextField
+            Text(text = "Letters Guessed") // Textfield Description
+
+            Spacer(modifier = Modifier.height(80.dp))
+
+            // Description / Instructions
+            var description: String = "Please input a letter. You will be rewarded X-times " +
+                    "the points for each letter in the hidden word"
+            Text(text = description)
         }
     }
 }

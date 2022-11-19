@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.wheeloffortune.data.GameState
 import com.example.wheeloffortune.data.WoFUiState
+import com.example.wheeloffortune.data.wheelResults
 import com.example.wheeloffortune.data.words
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,6 +27,18 @@ class WoFViewModel : ViewModel() {
             )
         }
     }
+
+    fun spinTheWheel(){
+        _uiState.update { currentState ->
+            currentState.copy(
+                pointsPerLetter = wheelResults.random()
+            )
+        }
+
+        setGameState(GameState.INPUTTING)
+        updateLettersToShow()
+    }
+
 
     fun updateLettersToShow() {
         var lettersGuessed : String = uiState.value.lettersGuessed.lowercase()
@@ -56,6 +69,7 @@ class WoFViewModel : ViewModel() {
             return false
 
         addGuessedLetter(letter)
+        setGameState(GameState.IDLE)
         return true
     }
 

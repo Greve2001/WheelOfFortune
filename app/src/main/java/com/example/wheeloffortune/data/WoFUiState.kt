@@ -12,6 +12,7 @@ data class WoFUiState(
     val hiddenWord: String = "Chicken",
     var lettersGuessed: String = "",
     var lettersToShow: String = "",
+    var pointsPerLetter: Int = 0,
 
     var gameState: GameState = GameState.IDLE,
 )
