@@ -48,12 +48,13 @@ fun WheelOfFortune() {
     val viewModel = remember { WoFViewModel() }
     val uiState = viewModel.uiState.collectAsState()
 
-    var lettersToDisplay = viewModel.getLettersToShow()
+    var lettersToDisplay = uiState.value.lettersToShow
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
-    Log.println(Log.DEBUG, "TEST", "Recompose!")
+    // Initial
+    viewModel.updateLettersToShow()
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -65,6 +66,7 @@ fun WheelOfFortune() {
         Button(
             onClick = {
                 viewModel.addGuessedLetter("C")
+                viewModel.updateLettersToShow()
                 focusRequester.requestFocus()
             }
         ) {

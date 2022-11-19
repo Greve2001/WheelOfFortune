@@ -6,4 +6,5 @@ data class WoFUiState(
 
     val hiddenWord: String = "Chickens",
     var lettersGuessed: String = "n",
+    var lettersToShow: String = ""
 )
