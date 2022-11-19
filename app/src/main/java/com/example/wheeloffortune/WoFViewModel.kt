@@ -69,6 +69,7 @@ class WoFViewModel : ViewModel() {
             return false
 
         addGuessedLetter(letter)
+        addPoints(letter)
         setGameState(GameState.IDLE)
         return true
     }
@@ -86,9 +87,28 @@ class WoFViewModel : ViewModel() {
         }
     }
 
+    private fun addPoints(letter: Char){
+        var occurences: Int = 0
+
+        val pointsPerLetter: Int = uiState.value.pointsPerLetter
+        val oldPoints: Int = uiState.value.points
+        val hiddenWord : String = uiState.value.hiddenWord.lowercase()
+
+        hiddenWord.forEach {
+            if (it == letter) occurences++
+        }
+
+        _uiState.update { currentState ->
+            currentState.copy(
+                points = oldPoints + occurences * pointsPerLetter
+            )
+        }
+    }
+
+
     private fun isWordFound() : Boolean {
-        var lettersGuessed : String = uiState.value.lettersGuessed.lowercase()
-        var hiddenWord : String = uiState.value.hiddenWord.lowercase()
+        val lettersGuessed : String = uiState.value.lettersGuessed.lowercase()
+        val hiddenWord : String = uiState.value.hiddenWord.lowercase()
         var numLettersFound = 0
 
         hiddenWord.forEach {
