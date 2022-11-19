@@ -3,6 +3,7 @@ package com.example.wheeloffortune
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.wheeloffortune.data.WoFUiState
+import com.example.wheeloffortune.data.words
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,13 +13,16 @@ class WoFViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(WoFUiState())
     val uiState: StateFlow<WoFUiState> = _uiState.asStateFlow()
 
+    fun startGame(){
+        fetchRandomWord()
+        updateLettersToShow()
+    }
+
 
     fun updateLettersToShow() {
-        var lettersGuessed : String = uiState.value.lettersGuessed
-        var hiddenWord : String = uiState.value.hiddenWord
+        var lettersGuessed : String = uiState.value.lettersGuessed.lowercase()
+        var hiddenWord : String = uiState.value.hiddenWord.lowercase()
         var lettersToDisplay : String = ""
-
-        Log.println(Log.DEBUG, "TEST", "Letters to show: ${lettersGuessed}")
 
         hiddenWord.forEach {
             if (lettersGuessed.contains(it))
@@ -34,9 +38,34 @@ class WoFViewModel : ViewModel() {
         }
     }
 
+    fun guessLetter(char: Char) : Boolean {
+        var lettersGuessed : String = uiState.value.lettersGuessed.lowercase()
+        val alphabetString : String = "abcdefghijklmnopqrstuvxyz"
 
-    fun addGuessedLetter(letter: String){
-        uiState.value.lettersGuessed += letter
-        Log.println(Log.DEBUG, "TEST", "Letters Guessed: ${uiState.value.lettersGuessed}")
+        val letter = char.lowercase()[0]
+
+        if (!(alphabetString.contains(letter) && !lettersGuessed.contains(letter)) )
+            return false
+
+        addGuessedLetter(letter)
+        return true
+    }
+
+    private fun addGuessedLetter(letter: Char){
+        // TODO Handle if the guess is incorrect and if everything is now guessed
+
+        _uiState.update { currentState ->
+            currentState.copy(
+                lettersGuessed = uiState.value.lettersGuessed + letter
+            )
+        }
+    }
+
+    fun fetchRandomWord(){
+        _uiState.update { currentState ->
+            currentState.copy(
+                hiddenWord = words.random()
+            )
+        }
     }
 }

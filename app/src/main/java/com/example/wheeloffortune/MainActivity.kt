@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -57,10 +58,9 @@ fun WheelOfFortune() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TopBar(points = uiState.value.points, lives = uiState.value.lives)
-        WordDisplay(letters = lettersToDisplay)
+        WordDisplay(letters = lettersToDisplay.uppercase())
         Button(
             onClick = {
-                viewModel.addGuessedLetter("C")
                 viewModel.updateLettersToShow()
                 focusRequester.requestFocus()
             }
@@ -69,11 +69,12 @@ fun WheelOfFortune() {
         }
         TextField(
             modifier = Modifier.focusRequester(focusRequester),
-            value = "",
+            value = uiState.value.lettersGuessed,
             onValueChange = {
-                keyboardController?.hide()
-                focusManager.clearFocus()
-                            },
+                if (viewModel.guessLetter(it.last())){
+                    keyboardController?.hide()
+                    focusManager.clearFocus()
+                } },
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color.Transparent,
                 // unfocusedIndicatorColor = Color.Transparent
