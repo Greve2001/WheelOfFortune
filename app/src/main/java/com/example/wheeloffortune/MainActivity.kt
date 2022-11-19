@@ -3,6 +3,7 @@ package com.example.wheeloffortune
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -61,11 +62,10 @@ fun WheelOfFortune() {
     ) {
         // Absolute
         TopBar(points = uiState.value.points, lives = uiState.value.lives)
-
         WordDisplay(letters = lettersToDisplay.uppercase())
-
         Spacer(modifier = Modifier.height(40.dp))
-        
+
+        // IDLE
         if (uiState.value.gameState == GameState.IDLE) {
             Button(
                 onClick = {
@@ -76,6 +76,7 @@ fun WheelOfFortune() {
             }
         }
 
+        // INPUTTING
         if (uiState.value.gameState == GameState.INPUTTING)  {
             // Result String
             val resultString = "You landed on ${uiState.value.pointsPerLetter} points!"
@@ -84,28 +85,21 @@ fun WheelOfFortune() {
             Spacer(modifier = Modifier.height(40.dp))
 
             // Guessed Letters
-            TextField(
-                modifier = Modifier.focusRequester(focusRequester),
-                value = uiState.value.lettersGuessed,
-                onValueChange = {
-                    if (viewModel.guessLetter(it.last())){
-                        keyboardController?.hide()
-                        focusManager.clearFocus()
-                    } },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.Transparent,
-                    // unfocusedIndicatorColor = Color.Transparent
-                )
-            )
+            GuessedLetters(
+                focusRequester = focusRequester,
+                guessedLetters = uiState.value.lettersGuessed
+            ) {
+                if (viewModel.guessLetter(it.last())){
+                    keyboardController?.hide()
+                    focusManager.clearFocus()
+                }
+            }
             focusRequester.requestFocus() // Focus on TextField
-            Text(text = "Letters Guessed") // Textfield Description
 
             Spacer(modifier = Modifier.height(80.dp))
 
-            // Description / Instructions
-            var description: String = "Please input a letter. You will be rewarded X-times " +
-                    "the points for each letter in the hidden word"
-            Text(text = description)
+            DescriptionBox(text = "Please input a letter. You will be rewarded X-times " +
+                    "the points for each letter in the hidden word")
         }
     }
 }

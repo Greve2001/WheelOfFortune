@@ -6,11 +6,16 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -71,4 +76,40 @@ fun TopBar(points: Int, lives: Int){
             fontSize = 20.sp
         )
     }
+}
+
+////////// Description Box //////////
+@Composable
+fun DescriptionBox(text: String){
+    BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+            .background(Color.LightGray),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = text,
+            modifier = Modifier.padding(10.dp)
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun GuessedLetters(
+    focusRequester: FocusRequester,
+    guessedLetters: String,
+    onValueChange: (String) -> Unit
+){
+    TextField(
+        value = guessedLetters,
+        onValueChange = onValueChange,
+        modifier = Modifier.focusRequester(focusRequester),
+        colors = TextFieldDefaults.textFieldColors(
+            containerColor = Color.Transparent,
+            // unfocusedIndicatorColor = Color.Transparent
+        )
+    )
+    Text(text = "Letters Guessed") // Textfield Description
 }
