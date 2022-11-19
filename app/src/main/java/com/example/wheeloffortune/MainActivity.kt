@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.wheeloffortune.data.GameState
 import com.example.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
 class MainActivity : ComponentActivity() {
@@ -60,28 +61,36 @@ fun WheelOfFortune() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TopBar(points = uiState.value.points, lives = uiState.value.lives)
+
         WordDisplay(letters = lettersToDisplay.uppercase())
-        Button(
-            onClick = {
-                viewModel.updateLettersToShow()
-                focusRequester.requestFocus()
+
+        if (uiState.value.gameState == GameState.IDLE) {
+            Button(
+                onClick = {
+                    viewModel.setGameState(GameState.INPUTTING)
+                    viewModel.updateLettersToShow()
+                }
+            ) {
+                Text(text = "Spin the Wheel")
             }
-        ) {
-            Text(text = "Spin the Wheel")
         }
-        TextField(
-            modifier = Modifier.focusRequester(focusRequester),
-            value = uiState.value.lettersGuessed,
-            onValueChange = {
-                if (viewModel.guessLetter(it.last())){
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
-                } },
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.Transparent,
-                // unfocusedIndicatorColor = Color.Transparent
+
+        if (uiState.value.gameState == GameState.INPUTTING)  {
+            TextField(
+                modifier = Modifier.focusRequester(focusRequester),
+                value = uiState.value.lettersGuessed,
+                onValueChange = {
+                    if (viewModel.guessLetter(it.last())){
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                    } },
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = Color.Transparent,
+                    // unfocusedIndicatorColor = Color.Transparent
+                )
             )
-        )
+            focusRequester.requestFocus()
+        }
     }
 }
 

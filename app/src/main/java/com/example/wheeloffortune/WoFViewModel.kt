@@ -2,6 +2,7 @@ package com.example.wheeloffortune
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.wheeloffortune.data.GameState
 import com.example.wheeloffortune.data.WoFUiState
 import com.example.wheeloffortune.data.words
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -85,5 +86,15 @@ class WoFViewModel : ViewModel() {
             return true
 
         return false
+    }
+
+
+
+    fun setGameState(state: GameState){
+        _uiState.update { currentState ->
+            currentState.copy(
+                gameState = state
+            )
+        }
     }
 }
