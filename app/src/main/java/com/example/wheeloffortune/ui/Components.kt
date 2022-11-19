@@ -6,10 +6,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,7 +59,7 @@ fun TopBar(points: Int, lives: Int){
         modifier = Modifier
             .fillMaxWidth()
             .height(40.dp)
-            .background(color = Color.Cyan),
+            .background(color = MaterialTheme.colorScheme.primary),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
