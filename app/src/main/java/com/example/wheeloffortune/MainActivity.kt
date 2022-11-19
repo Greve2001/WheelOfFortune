@@ -41,6 +41,8 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun WheelOfFortune() {
+    // TODO all viewModel calls be needs to be from one source of truth
+
     val viewModel = remember { WoFViewModel() }
     val uiState = viewModel.uiState.collectAsState()
 

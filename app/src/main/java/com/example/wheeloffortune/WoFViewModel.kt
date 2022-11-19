@@ -18,6 +18,13 @@ class WoFViewModel : ViewModel() {
         updateLettersToShow()
     }
 
+    fun fetchRandomWord(){
+        _uiState.update { currentState ->
+            currentState.copy(
+                hiddenWord = words.random()
+            )
+        }
+    }
 
     fun updateLettersToShow() {
         var lettersGuessed : String = uiState.value.lettersGuessed.lowercase()
@@ -53,19 +60,30 @@ class WoFViewModel : ViewModel() {
 
     private fun addGuessedLetter(letter: Char){
         // TODO Handle if the guess is incorrect and if everything is now guessed
-
         _uiState.update { currentState ->
             currentState.copy(
                 lettersGuessed = uiState.value.lettersGuessed + letter
             )
         }
+
+        if (isWordFound()) {
+            // Game is Won
+        }
     }
 
-    fun fetchRandomWord(){
-        _uiState.update { currentState ->
-            currentState.copy(
-                hiddenWord = words.random()
-            )
+    private fun isWordFound() : Boolean {
+        var lettersGuessed : String = uiState.value.lettersGuessed.lowercase()
+        var hiddenWord : String = uiState.value.hiddenWord.lowercase()
+        var numLettersFound = 0
+
+        hiddenWord.forEach {
+            if (lettersGuessed.contains(it))
+                numLettersFound++
         }
+
+        if (numLettersFound >= hiddenWord.length)
+            return true
+
+        return false
     }
 }
