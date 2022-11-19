@@ -1,4 +1,4 @@
-package com.example.wheeloffortune.ui
+package com.example.wheeloffortune.data
 
 data class WoFUiState(
     var lives: Int = 5,

@@ -2,7 +2,7 @@ package com.example.wheeloffortune
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.wheeloffortune.ui.WoFUiState
+import com.example.wheeloffortune.data.WoFUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
