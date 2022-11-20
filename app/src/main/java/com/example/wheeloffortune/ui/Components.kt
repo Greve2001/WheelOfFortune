@@ -113,5 +113,5 @@ fun GuessedLetters(
             // unfocusedIndicatorColor = Color.Transparent
         )
     )
-    Text(text = "Letters Guessed") // Textfield Description
+    Text(text = "Guess a letter") // Textfield Description
 }
