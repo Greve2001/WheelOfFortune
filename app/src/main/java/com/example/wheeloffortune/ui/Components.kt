@@ -1,6 +1,7 @@
 package com.example.wheeloffortune
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -60,17 +61,21 @@ fun TopBar(points: Int, lives: Int){
             .fillMaxWidth()
             .height(40.dp)
             .background(color = MaterialTheme.colorScheme.primary),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.Bottom
     ) {
+        val color = MaterialTheme.colorScheme.onPrimary
         Text(
             text = "Points: $points",
             modifier = Modifier.padding(5.dp),
-            fontSize = 20.sp
+            fontSize = 20.sp,
+            color = color
         )
         Text(
             text = "Lives: $lives",
             modifier = Modifier.padding(5.dp),
-            fontSize = 20.sp
+            fontSize = 20.sp,
+            color = color
         )
     }
 }
