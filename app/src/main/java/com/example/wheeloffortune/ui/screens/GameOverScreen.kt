@@ -3,21 +3,15 @@ package com.example.wheeloffortune.ui.screens
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import com.example.wheeloffortune.WoFViewModel
 
 @Composable
-fun StartScreen(
+fun GameOverScreen(
     viewModel: WoFViewModel,
-    onNavigateToGameScreen: () -> Unit
+    onRestartGame: () -> Unit
 ){
-    SideEffect {
-        // Start of game logic
-    }
-
-    Button(
-        onClick = onNavigateToGameScreen
-    ){
-        Text(text = "Navigate to Game")
+    Text(text = "Game Over!")
+    Button(onClick = onRestartGame) {
+        Text(text = "Restart Game")
     }
 }

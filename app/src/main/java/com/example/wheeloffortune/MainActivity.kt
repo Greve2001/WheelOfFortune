@@ -11,7 +11,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.wheeloffortune.ui.screens.GameOverScreen
 import com.example.wheeloffortune.ui.screens.GameScreen
+import com.example.wheeloffortune.ui.screens.StartScreen
 import com.example.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
 sealed class Screens(val route: String){
@@ -41,14 +43,25 @@ fun WheelOfFortune(){
         val navController = rememberNavController()
         val viewModel = remember { WoFViewModel() }
 
-        NavHost(navController = navController, startDestination = Screens.Game.route){
+        NavHost(navController = navController, startDestination = Screens.Start.route){
             composable(Screens.Start.route) {
-
+                StartScreen(
+                    viewModel = viewModel,
+                    onNavigateToGameScreen = { navController.navigate(Screens.Game.route) }
+                )
             }
 
             composable(Screens.Game.route) {
                 GameScreen(
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    onGameOver = { navController.navigate(Screens.GameOver.route) }
+                )
+            }
+
+            composable(Screens.GameOver.route) {
+                GameOverScreen(
+                    viewModel = viewModel,
+                    onRestartGame = { navController.navigate(Screens.Start.route) }
                 )
             }
         }

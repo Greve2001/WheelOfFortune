@@ -26,7 +26,8 @@ import com.example.wheeloffortune.ui.theme.WheelOfFortuneTheme
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun GameScreen(
-    viewModel: WoFViewModel
+    viewModel: WoFViewModel,
+    onGameOver: () -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
@@ -98,6 +99,6 @@ fun GameScreen(
 fun GameScreenPreview() {
     WheelOfFortuneTheme {
         val viewModel = remember { WoFViewModel() }
-        GameScreen(viewModel)
+        GameScreen(viewModel, {})
     }
 }
