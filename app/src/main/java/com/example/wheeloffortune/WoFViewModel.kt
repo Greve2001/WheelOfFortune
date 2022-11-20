@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 const val startLives = 5
+var initial = true;
 
 class WoFViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(WoFUiState())
@@ -28,6 +29,7 @@ class WoFViewModel : ViewModel() {
                 lettersToShow = "",
             )
         }
+        initial = true
 
         fetchRandomWord()
         updateLettersToShow()
@@ -48,7 +50,7 @@ class WoFViewModel : ViewModel() {
                 pointsPerLetter = wheelResults.random()
             )
         }
-
+        initial = false
         setGameState(GameState.INPUTTING)
         updateLettersToShow()
     }
@@ -158,7 +160,10 @@ class WoFViewModel : ViewModel() {
     fun getSpinResultString() : String {
         var resultString: String = ""
         if (uiState.value.gameState == GameState.IDLE){
-
+            if (correctGuess)
+                resultString = "You guessed a correct letter!"
+            if (!correctGuess && !initial)
+                resultString = "You guessed wrong. You lost a life..."
         }
         if (uiState.value.gameState == GameState.INPUTTING){
             resultString = "You landed on ${uiState.value.pointsPerLetter} points!"
