@@ -1,12 +1,12 @@
 package com.example.wheeloffortune.data
 
 enum class GameState() {
-    IDLE, INPUTTING, OVER
+    IDLE, INPUTTING, LOST, WON
 }
 
 data class WoFUiState(
 
-    var lives: Int = 5,
+    var lives: Int = 0,
     var points: Int = 0,
 
     val hiddenWord: String = "Chicken",

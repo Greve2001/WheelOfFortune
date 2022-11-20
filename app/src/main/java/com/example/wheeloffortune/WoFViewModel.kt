@@ -11,11 +11,24 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+const val startLives = 5
+
 class WoFViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(WoFUiState())
     val uiState: StateFlow<WoFUiState> = _uiState.asStateFlow()
 
+    var correctGuess = false
+
     fun startGame(){
+        _uiState.update { currentState ->
+            currentState.copy(
+                lives = startLives,
+                points = 0,
+                lettersGuessed = "",
+                lettersToShow = "",
+            )
+        }
+
         fetchRandomWord()
         updateLettersToShow()
         setGameState(GameState.IDLE)
@@ -86,7 +99,7 @@ class WoFViewModel : ViewModel() {
         }
 
         if (isWordFound()) {
-            setGameState(GameState.OVER)
+            setGameState(GameState.WON)
         }
     }
 
@@ -106,8 +119,24 @@ class WoFViewModel : ViewModel() {
                 points = oldPoints + occurences * pointsPerLetter
             )
         }
+
+        correctGuess = occurences != 0
+        if (!correctGuess)
+            removeLive()
     }
 
+    private fun removeLive(){
+        val newLives = uiState.value.lives-1
+        _uiState.update { currentState ->
+            currentState.copy(
+                lives = newLives
+            )
+        }
+
+        if (newLives <= 0){
+            setGameState(GameState.LOST)
+        }
+    }
 
     private fun isWordFound() : Boolean {
         val lettersGuessed : String = uiState.value.lettersGuessed.lowercase()
@@ -126,6 +155,17 @@ class WoFViewModel : ViewModel() {
     }
 
 
+    fun getSpinResultString() : String {
+        var resultString: String = ""
+        if (uiState.value.gameState == GameState.IDLE){
+
+        }
+        if (uiState.value.gameState == GameState.INPUTTING){
+            resultString = "You landed on ${uiState.value.pointsPerLetter} points!"
+        }
+
+        return resultString
+    }
 
     fun setGameState(state: GameState){
         _uiState.update { currentState ->

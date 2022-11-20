@@ -40,7 +40,7 @@ fun GameScreen(
     // Not sure why i have to make a single time trigger, when it switches screens
     // But if i dont the onGameOver() gets called infinite times
     var once = remember { mutableStateOf(true) }
-    if (uiState.value.gameState == GameState.OVER && once.value){
+    if ((uiState.value.gameState == GameState.WON || uiState.value.gameState == GameState.LOST) && once.value){
         onGameOver()
         once.value = false
     }
@@ -57,6 +57,10 @@ fun GameScreen(
         Spacer(modifier = Modifier.height(20.dp))
         Image(painter = painterResource(id = R.drawable.wheel_of_fortune), contentDescription = "", Modifier.width(150.dp))
         Spacer(modifier = Modifier.height(20.dp))
+
+        // Result String
+        Text(text = viewModel.getSpinResultString())
+
         WordDisplay(letters = lettersToDisplay.uppercase())
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -73,12 +77,6 @@ fun GameScreen(
 
         // INPUTTING
         if (uiState.value.gameState == GameState.INPUTTING)  {
-            // Result String
-            val resultString = "You landed on ${uiState.value.pointsPerLetter} points!"
-            Text(text = resultString)
-
-            Spacer(modifier = Modifier.height(40.dp))
-
             // Guessed Letters
             GuessedLetters(
                 focusRequester = focusRequester,
