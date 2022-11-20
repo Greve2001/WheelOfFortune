@@ -1,9 +1,14 @@
 package com.example.wheeloffortune.ui.screens
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import com.example.wheeloffortune.WoFViewModel
 
 @Composable
@@ -11,9 +16,15 @@ fun StartScreen(
     viewModel: WoFViewModel,
     onNavigateToGameScreen: () -> Unit
 ){
-    Button(
-        onClick = onNavigateToGameScreen
-    ){
-        Text(text = "Navigate to Game")
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Button(
+            onClick = onNavigateToGameScreen
+        ){
+            Text(text = "Start Game")
+        }
     }
 }
