@@ -1,6 +1,7 @@
 package com.example.wheeloffortune
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -47,14 +48,19 @@ fun WheelOfFortune(){
             composable(Screens.Start.route) {
                 StartScreen(
                     viewModel = viewModel,
-                    onNavigateToGameScreen = { navController.navigate(Screens.Game.route) }
+                    onNavigateToGameScreen = {
+                        navController.navigate(Screens.Game.route)
+                        viewModel.startGame()
+                    }
                 )
             }
 
             composable(Screens.Game.route) {
                 GameScreen(
                     viewModel = viewModel,
-                    onGameOver = { navController.navigate(Screens.GameOver.route) }
+                    onGameOver = {
+                        navController.navigate(Screens.GameOver.route)
+                    }
                 )
             }
 

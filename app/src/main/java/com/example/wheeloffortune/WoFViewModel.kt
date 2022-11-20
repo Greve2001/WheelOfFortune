@@ -20,7 +20,7 @@ class WoFViewModel : ViewModel() {
         updateLettersToShow()
     }
 
-    fun fetchRandomWord(){
+    private fun fetchRandomWord(){
         _uiState.update { currentState ->
             currentState.copy(
                 hiddenWord = words.random()
@@ -68,9 +68,11 @@ class WoFViewModel : ViewModel() {
         if (!(alphabetString.contains(letter) && !lettersGuessed.contains(letter)) )
             return false
 
+        setGameState(GameState.IDLE)
         addGuessedLetter(letter)
         addPoints(letter)
-        setGameState(GameState.IDLE)
+
+        Log.println(Log.DEBUG, "TEST", "State: ${uiState.value.gameState}")
         return true
     }
 
@@ -83,7 +85,7 @@ class WoFViewModel : ViewModel() {
         }
 
         if (isWordFound()) {
-            // Game is Won
+            setGameState(GameState.OVER)
         }
     }
 

@@ -1,7 +1,7 @@
 package com.example.wheeloffortune.data
 
 enum class GameState() {
-    IDLE, INPUTTING,
+    IDLE, INPUTTING, OVER
 }
 
 data class WoFUiState(

@@ -11,10 +11,6 @@ fun StartScreen(
     viewModel: WoFViewModel,
     onNavigateToGameScreen: () -> Unit
 ){
-    SideEffect {
-        // Start of game logic
-    }
-
     Button(
         onClick = onNavigateToGameScreen
     ){
