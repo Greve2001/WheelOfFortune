@@ -82,7 +82,7 @@ fun GameScreen(
                 focusRequester = focusRequester,
                 guessedLetters = "" //uiState.value.lettersGuessed
             ) {
-                if (viewModel.guessLetter(it.first())){
+                if (viewModel.guessLetter(it)){
                     keyboardController?.hide()
 
                     focusManager.clearFocus()

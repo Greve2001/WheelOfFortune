@@ -75,11 +75,13 @@ class WoFViewModel : ViewModel() {
         }
     }
 
-    fun guessLetter(char: Char) : Boolean {
+    fun guessLetter(letter: String) : Boolean {
         var lettersGuessed : String = uiState.value.lettersGuessed.lowercase()
         val alphabetString : String = "abcdefghijklmnopqrstuvxyz"
 
-        val letter = char.lowercase()[0]
+        if (letter.isEmpty()) return false
+
+        val letter = letter.first().lowercase()[0]
 
         if (!(alphabetString.contains(letter) && !lettersGuessed.contains(letter)) )
             return false
