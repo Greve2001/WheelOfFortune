@@ -18,6 +18,7 @@ class WoFViewModel : ViewModel() {
     fun startGame(){
         fetchRandomWord()
         updateLettersToShow()
+        setGameState(GameState.IDLE)
     }
 
     private fun fetchRandomWord(){
