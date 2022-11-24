@@ -40,9 +40,19 @@ class WoFViewModel : ViewModel() {
     }
 
     private fun fetchRandomWord(){
+        val category: Set<String> = words[uiState.value.categoryKey]!!
+
         _uiState.update { currentState ->
             currentState.copy(
-                hiddenWord = words.random(Random(Date().time))
+                hiddenWord = category.random(Random(Date().time))
+            )
+        }
+    }
+
+    fun selectCategory(category: String) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                categoryKey = category
             )
         }
     }

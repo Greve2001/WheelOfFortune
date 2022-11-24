@@ -15,4 +15,5 @@ data class WoFUiState(
     var pointsPerLetter: Int = 0,
 
     var gameState: GameState = GameState.IDLE,
+    var categoryKey: String = "",
 )
