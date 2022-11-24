@@ -62,6 +62,14 @@ class WoFViewModel : ViewModel() {
                 pointsPerLetter = wheelResults.random(Random(Date().time))
             )
         }
+        if (uiState.value.pointsPerLetter == 0) { // Bankrupt
+            _uiState.update { currentState ->
+                currentState.copy(
+                    points = 0
+                )
+            }
+        }
+
         initial = false
         setGameState(GameState.INPUTTING)
         updateLettersToShow()
@@ -107,7 +115,6 @@ class WoFViewModel : ViewModel() {
     }
 
     private fun addGuessedLetter(letter: Char){
-        // TODO Handle if the guess is incorrect and if everything is now guessed
         _uiState.update { currentState ->
             currentState.copy(
                 lettersGuessed = uiState.value.lettersGuessed + letter
@@ -181,6 +188,8 @@ class WoFViewModel : ViewModel() {
         }
         if (uiState.value.gameState == GameState.INPUTTING){
             resultString = "You landed on ${uiState.value.pointsPerLetter} points!"
+            if (uiState.value.pointsPerLetter == 0)
+                resultString += "\nYou lost all your points"
         }
 
         return resultString
