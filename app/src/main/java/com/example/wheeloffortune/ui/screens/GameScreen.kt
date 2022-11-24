@@ -55,6 +55,8 @@ fun GameScreen(
         TopBar(points = uiState.value.points, lives = uiState.value.lives)
 
         Spacer(modifier = Modifier.height(20.dp))
+
+        // Source of image. Verified copyright free: (https://www.flaticon.com/free-icon/wheel-of-fortune_2006249?related_id=2006249&origin=search)
         Image(painter = painterResource(id = R.drawable.wheel_of_fortune), contentDescription = "", Modifier.width(150.dp))
         Spacer(modifier = Modifier.height(20.dp))
 
