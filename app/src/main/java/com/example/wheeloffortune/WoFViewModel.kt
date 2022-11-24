@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import java.lang.Math.random
+import java.util.*
+import kotlin.random.Random
 
 const val startLives = 5
 var initial = true;
@@ -39,7 +42,7 @@ class WoFViewModel : ViewModel() {
     private fun fetchRandomWord(){
         _uiState.update { currentState ->
             currentState.copy(
-                hiddenWord = words.random()
+                hiddenWord = words.random(Random(Date().time))
             )
         }
     }
@@ -47,7 +50,7 @@ class WoFViewModel : ViewModel() {
     fun spinTheWheel(){
         _uiState.update { currentState ->
             currentState.copy(
-                pointsPerLetter = wheelResults.random()
+                pointsPerLetter = wheelResults.random(Random(Date().time))
             )
         }
         initial = false

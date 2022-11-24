@@ -9,7 +9,7 @@ data class WoFUiState(
     var lives: Int = 0,
     var points: Int = 0,
 
-    val hiddenWord: String = "Chicken",
+    val hiddenWord: String = "",
     var lettersGuessed: String = "",
     var lettersToShow: String = "",
     var pointsPerLetter: Int = 0,
