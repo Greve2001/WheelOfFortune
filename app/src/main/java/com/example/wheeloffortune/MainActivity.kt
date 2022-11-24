@@ -60,6 +60,7 @@ fun WheelOfFortune(){
                     viewModel = viewModel,
                     onGameOver = {
                         navController.navigate(Screens.GameOver.route)
+                        viewModel.resetGame()
                     }
                 )
             }

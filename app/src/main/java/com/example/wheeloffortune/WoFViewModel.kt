@@ -29,8 +29,6 @@ class WoFViewModel : ViewModel() {
                 lives = startLives,
                 points = 0,
                 lettersGuessed = "",
-                lettersToShow = "",
-                categoryKey = "",
             )
         }
         initial = true
@@ -192,6 +190,15 @@ class WoFViewModel : ViewModel() {
         _uiState.update { currentState ->
             currentState.copy(
                 gameState = state
+            )
+        }
+    }
+
+    fun resetGame(){
+        _uiState.update { currentState ->
+            currentState.copy(
+                lettersToShow = "",
+                categoryKey = ""
             )
         }
     }
