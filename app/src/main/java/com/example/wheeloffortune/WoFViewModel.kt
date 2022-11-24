@@ -30,6 +30,7 @@ class WoFViewModel : ViewModel() {
                 points = 0,
                 lettersGuessed = "",
                 lettersToShow = "",
+                categoryKey = "",
             )
         }
         initial = true
