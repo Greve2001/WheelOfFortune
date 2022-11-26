@@ -15,6 +15,9 @@ import com.example.wheeloffortune.data.categoryAnimal
 import com.example.wheeloffortune.data.words
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
+/**
+ * Start Screen Composable. Start screen for choosing category before starting the game
+ */
 @Composable
 fun StartScreen(
     viewModel: WoFViewModel,
@@ -55,6 +58,7 @@ fun StartScreen(
 
         Spacer(modifier = Modifier.height(150.dp))
 
+        // Make sure that a category is selected before enabling startGame Button
         var hasSelectedCategory = false
         if (uiState.value.categoryKey != "") hasSelectedCategory = true
         Button(

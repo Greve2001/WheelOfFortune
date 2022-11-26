@@ -21,31 +21,37 @@ import com.example.wheeloffortune.R
 import com.example.wheeloffortune.data.GameState
 import com.example.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
+/**
+ * Game Screen Composable. Main screen for playing THe Wheel of Fortune game
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun GameScreen(
     viewModel: WoFViewModel,
     onGameOver: () -> Unit
 ) {
+    // Initialize variables to use through out the composition
     val uiState = viewModel.uiState.collectAsState()
-
-    var lettersToDisplay = uiState.value.lettersToShow
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
-    // Initial
+    var lettersToDisplay = uiState.value.lettersToShow
+
+
+    // Initial call to display the words, becuase the uiState string is empty
     viewModel.updateLettersToShow()
 
     // Not sure why i have to make a single time trigger, when it switches screens
-    // But if i dont the onGameOver() gets called infinite times
+    // But if i dont the onGameOver() gets called infinite times, though we should be on another screen
     var once = remember { mutableStateOf(true) }
+    // If game is Lost or Won navigate to GameOver screen
     if ((uiState.value.gameState == GameState.WON || uiState.value.gameState == GameState.LOST) && once.value){
         onGameOver()
         once.value = false
     }
 
-
+    // Main Column
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
@@ -93,11 +99,6 @@ fun GameScreen(
             SideEffect { // Focus on TextField
                 focusRequester.requestFocus()
             }
-
-            Spacer(modifier = Modifier.height(80.dp))
-
-            DescriptionBox(text = "Please input a letter. You will be rewarded X-times " +
-                    "the points for each letter in the hidden word")
         }
     }
 }

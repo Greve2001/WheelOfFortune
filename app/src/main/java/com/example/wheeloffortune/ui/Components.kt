@@ -19,9 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
-////////// Hidden Word //////////
+/**
+ * Word Display of a box for each letter in a grid
+ */
 @Composable
 fun WordDisplay(letters: String){
+    // Calculate grid width to make it be centered on screen
     var gridWidth = letters.toList().count() * 40
     if (gridWidth > 380) gridWidth = 380
 
@@ -36,8 +39,11 @@ fun WordDisplay(letters: String){
     }
 }
 
+/**
+ * Letter box used by WordDisplay
+ */
 @Composable
-fun Letter(letter: String){
+private fun Letter(letter: String){
     var modifier = Modifier
         .height(50.dp)
         .width(40.dp)
@@ -53,7 +59,9 @@ fun Letter(letter: String){
     }
 }
 
-////////// Top Bar //////////
+/**
+ * Topbar to show game variables: points and lives.
+ */
 @Composable
 fun TopBar(points: Int, lives: Int){
     Row(
@@ -80,23 +88,9 @@ fun TopBar(points: Int, lives: Int){
     }
 }
 
-////////// Description Box //////////
-@Composable
-fun DescriptionBox(text: String){
-    BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)
-            .background(Color.LightGray),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = text,
-            modifier = Modifier.padding(10.dp)
-        )
-    }
-}
-
+/**
+ * Outlined textfield, that the user has to input a single letter into at a time.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GuessedLetters(
@@ -110,7 +104,6 @@ fun GuessedLetters(
         modifier = Modifier.focusRequester(focusRequester),
         colors = TextFieldDefaults.textFieldColors(
             containerColor = Color.Transparent,
-            // unfocusedIndicatorColor = Color.Transparent
         )
     )
     Text(text = "Guess a letter") // Textfield Description

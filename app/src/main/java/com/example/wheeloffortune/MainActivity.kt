@@ -17,12 +17,6 @@ import com.example.wheeloffortune.ui.screens.GameScreen
 import com.example.wheeloffortune.ui.screens.StartScreen
 import com.example.wheeloffortune.ui.theme.WheelOfFortuneTheme
 
-sealed class Screens(val route: String){
-    object Start : Screens("startScreen")
-    object Game : Screens("gameScreen")
-    object GameOver : Screens("gameOverScreen")
-}
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +35,13 @@ fun WheelOfFortune(){
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
+        // Setup
         val navController = rememberNavController()
         val viewModel = remember { WoFViewModel() }
 
         NavHost(navController = navController, startDestination = Screens.Start.route){
-            composable(Screens.Start.route) {
+
+            composable(Screens.Start.route) { // Start Screen
                 StartScreen(
                     viewModel = viewModel,
                     onNavigateToGameScreen = {
@@ -55,7 +51,7 @@ fun WheelOfFortune(){
                 )
             }
 
-            composable(Screens.Game.route) {
+            composable(Screens.Game.route) { // Game Screen
                 GameScreen(
                     viewModel = viewModel,
                     onGameOver = {
@@ -65,7 +61,7 @@ fun WheelOfFortune(){
                 )
             }
 
-            composable(Screens.GameOver.route) {
+            composable(Screens.GameOver.route) { // Game Over Screen
                 GameOverScreen(
                     viewModel = viewModel,
                     onRestartGame = { navController.navigate(Screens.Start.route) }
@@ -75,6 +71,14 @@ fun WheelOfFortune(){
     }
 }
 
+/**
+ * Container holding screen routes to ensure no mistyping
+ */
+sealed class Screens(val route: String){
+    object Start : Screens("startScreen")
+    object Game : Screens("gameScreen")
+    object GameOver : Screens("gameOverScreen")
+}
 
 @Preview(showBackground = true)
 @Composable

@@ -1,5 +1,8 @@
 package com.example.wheeloffortune.data
 
+/**
+ * Different outcomes of spinning the wheel of fortune
+ */
 val wheelResults: Set<Int> = setOf(
     100,
     100,

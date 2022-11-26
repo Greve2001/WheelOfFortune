@@ -12,6 +12,9 @@ import androidx.compose.ui.unit.sp
 import com.example.wheeloffortune.WoFViewModel
 import com.example.wheeloffortune.data.GameState
 
+/**
+ * Game Over Screen Composable. Used after the game is won or lost
+ */
 @Composable
 fun GameOverScreen(
     viewModel: WoFViewModel,
@@ -24,12 +27,11 @@ fun GameOverScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ){
-        // H1
-        Text(
+        Text( // Heading
             text = "Game Over!",
             fontSize = 40.sp
         )
-
+        // Display text depending on winning or losing
         if (uiState.value.gameState == GameState.WON) {
             Text(text = "You have Won!")
             Text(text = "You won with ${uiState.value.points} points")
